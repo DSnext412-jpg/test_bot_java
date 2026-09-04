@@ -1,8 +1,8 @@
 package com.example.javaaichatbot.service;
 
-import com.example.javaaichatbot.model.Conversation;
 import com.example.javaaichatbot.model.Message;
 import com.example.javaaichatbot.model.User;
+import com.example.javaaichatbot.model.Conversation;
 import com.example.javaaichatbot.repository.MessageRepository;
 import com.example.javaaichatbot.repository.ConversationRepository;
 import com.example.javaaichatbot.repository.UserRepository;
@@ -36,22 +36,30 @@ public class ConversationService {
         return conversationRepository.findByUserOrderByCreatedAtDesc(user);
     }
 
-    public Optional<Conversation> getConversationById(Long conversationId, User user) {
-        return conversationRepository.findByUserAndId(user, conversationId);
+    public Conversation getConversationById(Long conversationId, User user) {
+        return conversationRepository.findByUserAndId(user, conversationId)
+                .orElseThrow(() -> new IllegalArgumentException("Conversation not found or does not belong to user"));
     }
 
     @Transactional
     public void deleteConversation(Long conversationId, User user) {
+        // Verify conversation belongs to user first
+        getConversationById(conversationId, user);
+        // Delete messages for this conversation
         messageRepository.deleteByConversationId(conversationId);
+        // Delete the conversation
         conversationRepository.deleteById(conversationId);
     }
 
-    public List<Message> getMessagesByConversation(Conversation conversation) {
-        return messageRepository.findByConversationId(conversation.getId());
+    public List<Message> getMessagesByConversation(Long conversationId, User user) {
+        // Verify conversation belongs to user
+        getConversationById(conversationId, user); // Will throw if not found
+        return messageRepository.findByConversationId(conversationId);
     }
 
     @Transactional
-    public Message addMessage(Conversation conversation, String content, Message.Role role) {
+    public Message addMessage(Long conversationId, User user, String content, Message.Role role) {
+        Conversation conversation = getConversationById(conversationId, user);
         Message message = new Message();
         message.setContent(content);
         message.setRole(role);

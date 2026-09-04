@@ -1,0 +1,16 @@
+# Ignore Maven build output
+target/
+
+# Ignore environment variables
+.env
+*.env
+
+# IDE files
+.idea/
+.vscode/
+
+# Windows thumbnails
+Thumbs.db
+
+# OS files
+Desktop.ini

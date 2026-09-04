@@ -4,16 +4,19 @@ import com.example.javaaichatbot.ai.AIService;
 import com.example.javaaichatbot.dto.ChatRequest;
 import com.example.javaaichatbot.dto.ChatResponse;
 import com.example.javaaichatbot.exception.AIServiceException;
-import com.example.javaaichatbot.model.*;
+import com.example.javaaichatbot.model.Message;
+import com.example.javaaichatbot.model.User;
+import com.example.javaaichatbot.model.Conversation;
 import com.example.javaaichatbot.service.ConversationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/chat")
@@ -29,29 +32,62 @@ public class ChatController {
     }
 
     @PostMapping
-    public ResponseEntity<ChatResponse> sendMessage(@Valid @RequestBody ChatRequest request) {
-        ChatResponse response = aiService.generateResponse(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ChatResponse> sendMessage(@Valid @RequestBody ChatRequest request,
+                                                    @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        User user = (User) userDetails;
+
+        // Find existing conversation for this user, or create a new one
+        List<Conversation> conversations = conversationService.getConversationsByUser(user);
+        Conversation conversation = conversations.isEmpty()
+                ? conversationService.createConversation(user, "Recent")
+                : conversations.get(0);
+
+        // Save user message
+        Message userMessage = conversationService.addMessage(
+                conversation.getId(), user, request.getMessage(), Message.Role.USER);
+
+        try {
+            // Call AI API
+            ChatResponse response = aiService.generateResponse(request);
+
+            // Save assistant message
+            Message assistantMessage = conversationService.addMessage(
+                    conversation.getId(), user, response.getResponse(), Message.Role.ASSISTANT);
+
+            return ResponseEntity.ok(response);
+        } catch (AIServiceException e) {
+            // Still save the user message even if AI fails
+            return ResponseEntity.status(503)
+                    .body(new ChatResponse("AI service temporarily unavailable. Your message has been saved."));
+        }
     }
 
     @GetMapping("/conversations")
-    public ResponseEntity<List<Conversation>> getConversations() {
-        return ResponseEntity.ok(conversationService.getConversationsByUser(null));
+    public ResponseEntity<List<Conversation>> getConversations(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = (User) userDetails;
+        return ResponseEntity.ok(conversationService.getConversationsByUser(user));
     }
 
     @GetMapping("/conversations/{id}")
-    public ResponseEntity<Conversation> getConversation(@PathVariable Long id) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<Conversation> getConversation(@PathVariable Long id,
+                                                      @AuthenticationPrincipal UserDetails userDetails) {
+        User user = (User) userDetails;
+        return ResponseEntity.ok(conversationService.getConversationById(id, user));
     }
 
     @GetMapping("/conversations/{id}/messages")
-    public ResponseEntity<List<Message>> getMessages(@PathVariable Long id) {
-        return ResponseEntity.ok(conversationService.getMessagesByConversation(null));
+    public ResponseEntity<List<Message>> getMessages(@PathVariable Long id,
+                                                     @AuthenticationPrincipal UserDetails userDetails) {
+        User user = (User) userDetails;
+        return ResponseEntity.ok(conversationService.getMessagesByConversation(id, user));
     }
 
     @DeleteMapping("/conversations/{id}")
-    public ResponseEntity<Void> deleteConversation(@PathVariable Long id) {
-        conversationService.deleteConversation(id, null);
+    public ResponseEntity<Void> deleteConversation(@PathVariable Long id,
+                                                 @AuthenticationPrincipal UserDetails userDetails) {
+        User user = (User) userDetails;
+        conversationService.deleteConversation(id, user);
         return ResponseEntity.noContent().build();
     }
 }

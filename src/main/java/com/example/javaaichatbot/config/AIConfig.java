@@ -1,6 +1,7 @@
 package com.example.javaaichatbot.config;
 
 import org.springframework.stereotype.Component;
+import java.time.Duration;
 
 @Component
 public class AIConfig {
@@ -11,9 +12,10 @@ public class AIConfig {
     private final int timeout;
 
     public AIConfig() {
-        this.apiUrl = System.getenv().getOrDefault("AI_API_URL", "http://localhost:8080");
-        this.apiKey = System.getenv().getOrDefault("AI_API_KEY", "");
-        this.modelName = System.getenv().getOrDefault("AI_MODEL_NAME", "gpt-3.5-turbo");
+        this.apiUrl = System.getenv().getOrDefault("AI_API_URL", "https://generativelanguage.googleapis.com/v1beta");
+        String key = System.getenv().get("AI_API_KEY");
+        this.apiKey = key;  // Can be null if not set - will be checked in AIServiceImpl
+        this.modelName = System.getenv().getOrDefault("AI_MODEL_NAME", "gemini-1.5-flash");
         this.timeout = Integer.parseInt(
                 System.getenv().getOrDefault("AI_TIMEOUT", "30000")
         );
