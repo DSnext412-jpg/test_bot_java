@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                .requestMatchers("/api/auth/register", "/api/auth/sign-up", "/api/auth/login").permitAll()
                 .requestMatchers("/api/chat/**", "/api/conversations/**").authenticated()
                 .anyRequest().denyAll()
             )
