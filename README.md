@@ -390,28 +390,6 @@ Tests cover areas such as:
 
 ---
 
-# 📸 Screenshots
-
-Add your actual application screenshots here:
-
-<div align="center">
-
-### 💬 Chat Interface
-
-<img src="docs/images/chat.png" width="90%"/>
-
-### 📚 Conversation History
-
-<img src="docs/images/conversations.png" width="90%"/>
-
-### 🔐 Authentication
-
-<img src="docs/images/login.png" width="90%"/>
-
-</div>
-
----
-
 # 🗺️ Roadmap
 
 ```text
