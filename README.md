@@ -1,233 +1,523 @@
-# Java AI Chatbot
+<div align="center">
 
-A full-stack AI chatbot application built with Java, Spring Boot, and HTML/CSS/JavaScript.
+# 🤖 JAVA AI CHATBOT
 
-## Project Overview
+### A Modern AI Chat Application Built with Java & Spring Boot
 
-This project demonstrates a complete AI chatbot solution featuring:
-- Backend REST API with Spring Boot
-- AI API integration using HTTP/JSON
-- PostgreSQL database (with H2 for development)
-- Conversation history persistence
-- Authentication support
-- Modern chat frontend
+<p>
+  <img src="https://img.shields.io/badge/Java-21+-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.2.2-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Maven-Build-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white"/>
+</p>
 
-## Features
+<p>
+  <img src="https://img.shields.io/badge/AI-Powered-8A2BE2?style=flat-square"/>
+  <img src="https://img.shields.io/badge/REST%20API-Ready-00C853?style=flat-square"/>
+  <img src="https://img.shields.io/badge/JUnit-Testing-25A162?style=flat-square&logo=junit5"/>
+  <img src="https://img.shields.io/badge/Status-Active%20Development-00C853?style=flat-square"/>
+</p>
 
-### Core Features
-- **Basic Chat**: Send messages to AI API and receive responses
-- **AI API Integration**: Abstracted behind AIService interface for easy replacement
-- **Conversation History**: Create, view, and delete multiple conversations
-- **Message Storage**: Persistent storage of chat messages with roles (USER/ASSISTANT/SYSTEM)
+> **Learning Java by building something real.**
 
-### Authentication (Planned)
-- User registration and login
-- Secure password handling
-- JWT token support (configuration ready)
+</div>
 
-### Frontend
-- Clean, modern chatbot UI
-- Enter to send, Shift+Enter for newline
-- Auto-scrolling chat area
-- User/AI message distinction
-- Loading indicator
-- Error message display
-- Responsive design
+---
 
-### Error Handling
-- Centralized exception handling
-- Proper HTTP error codes (400, 401, 403, 404, 429, 500, 503)
-- Clean JSON error responses
-- No API key exposure
+## ✦ Overview
 
-### Testing
-- JUnit 5 unit tests
-- Spring Boot Test integration
-- Mockito for mocking external services
-- 4+ test cases covering core functionality
+**Java AI Chatbot** is a full-stack AI chatbot application built to explore modern Java backend development, REST APIs, database persistence, authentication, testing, and AI API integration.
 
-## Technology Stack
+The project connects a **Java/Spring Boot backend** with a clean browser-based chat interface and a persistent conversation system.
 
-### Backend
-- **Java 21+** - Modern Java version
-- **Spring Boot 3.2.2** - Framework for backend development
-- **Spring Web** - REST API endpoints
-- **Spring Data JPA** - Database operations
-- **Hibernate** - ORM implementation
-- **PostgreSQL** - Production database
-- **H2 Database** - Development database (in-memory)
-- **Jackson** - JSON processing
-- **Bean Validation** - Input validation
-- **Spring Security** - Authentication and authorization
-
-### Frontend
-- **HTML5** - Page structure
-- **CSS3** - Styling and layout
-- **JavaScript** - Interactivity and API calls
-
-### AI Integration
-- **HTTP/JSON** - Communication with AI API
-- **RestTemplate** - Spring's HTTP client
-- **Configurable AI provider** - Easy to swap AI models
-
-### Build Tools
-- **Maven** - Project build and dependency management
-
-## Folder Structure
-
+```text
+                  ┌──────────────────┐
+                  │      USER        │
+                  └────────┬─────────┘
+                           │
+                           ▼
+                  ┌──────────────────┐
+                  │   CHAT FRONTEND  │
+                  │ HTML / CSS / JS  │
+                  └────────┬─────────┘
+                           │ REST
+                           ▼
+                  ┌──────────────────┐
+                  │   SPRING BOOT    │
+                  │    REST API      │
+                  └────────┬─────────┘
+                           │
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+         ┌────────┐   ┌─────────┐  ┌──────────┐
+         │   AI   │   │   JPA   │  │ Security │
+         │Service │   │Hibernate│  │  Layer   │
+         └────┬───┘   └────┬────┘  └──────────┘
+              │             │
+              ▼             ▼
+        ┌──────────┐   ┌──────────┐
+        │ AI API   │   │PostgreSQL│
+        └──────────┘   └──────────┘
 ```
+
+---
+
+# ✨ Features
+
+### 💬 AI Conversation
+
+- Send messages to an AI service
+- Receive AI-generated responses
+- Clean chat interface
+- Loading and error states
+
+### 🧠 Conversation Management
+
+- Create conversations
+- View conversation history
+- Store individual messages
+- Delete conversations
+- Track message roles
+
+```text
+USER
+  │
+  ├── Message
+  │
+  ▼
+AI SERVICE
+  │
+  ├── Response
+  │
+  ▼
+ASSISTANT
+```
+
+### 🔐 Authentication
+
+Authentication architecture is prepared for:
+
+- User registration
+- Login
+- Password hashing
+- JWT-based authentication
+- Authorization
+
+### 🛡️ Error Handling
+
+Centralized exception handling provides clean API responses for:
+
+```text
+400  Bad Request
+401  Unauthorized
+403  Forbidden
+404  Not Found
+429  Too Many Requests
+500  Internal Server Error
+503  AI Service Unavailable
+```
+
+### 🧪 Testing
+
+Testing is built into the project using:
+
+- JUnit 5
+- Spring Boot Test
+- Mockito
+- Mock AI services
+
+No real AI API key is required for the core test suite.
+
+---
+
+# 🧩 Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Language | Java 21+ |
+| Backend | Spring Boot 3.2.2 |
+| REST | Spring Web |
+| ORM | Hibernate |
+| Data Access | Spring Data JPA |
+| Production DB | PostgreSQL |
+| Development DB | H2 |
+| Security | Spring Security |
+| JSON | Jackson |
+| Validation | Bean Validation |
+| Frontend | HTML / CSS / JavaScript |
+| HTTP Client | RestTemplate |
+| Build | Maven |
+| Testing | JUnit 5 + Mockito |
+
+---
+
+# 🏗️ Architecture
+
+```text
+┌─────────────────────────────────────────────┐
+│                 FRONTEND                    │
+│                                             │
+│        HTML + CSS + JavaScript              │
+└─────────────────────┬───────────────────────┘
+                      │
+                      │ HTTP / JSON
+                      ▼
+┌─────────────────────────────────────────────┐
+│              SPRING BOOT API                │
+│                                             │
+│  Controller → Service → Repository          │
+└──────────────┬──────────────────┬───────────┘
+               │                  │
+               ▼                  ▼
+        ┌─────────────┐    ┌──────────────┐
+        │  AI SERVICE │    │   DATABASE   │
+        │             │    │              │
+        │ HTTP / JSON │    │ PostgreSQL   │
+        └──────┬──────┘    │ H2           │
+               │           └──────────────┘
+               ▼
+          AI PROVIDER
+```
+
+---
+
+# 📁 Project Structure
+
+```text
 java-ai-chatbot/
+│
 ├── src/
+│   │
 │   ├── main/
-│   │   ├── java/com/example/javaaichatbot/
-│   │   │   ├── ai/              # AI service interface and implementation
-│   │   │   ├── config/          # Configuration classes
-│   │   │   ├── controller/      # REST controllers
-│   │   │   ├── dto/             # Data transfer objects
-│   │   │   ├── exception/       # Exception handling
-│   │   │   ├── model/           # JPA entities (User, Conversation, Message)
-│   │   │   ├── repository/      # Database repositories
-│   │   │   ├── service/         # Business logic services
-│   │   │   ├── security/        # Security configuration
-│   │   │   └── util/            # Utility classes
-│   │   │   └── JavaAiChatbotApplication.java  # Main application class
+│   │   ├── java/
+│   │   │   └── com/example/javaaichatbot/
+│   │   │       │
+│   │   │       ├── ai/
+│   │   │       │   └── AIService
+│   │   │       │
+│   │   │       ├── config/
+│   │   │       │
+│   │   │       ├── controller/
+│   │   │       │
+│   │   │       ├── dto/
+│   │   │       │
+│   │   │       ├── exception/
+│   │   │       │
+│   │   │       ├── model/
+│   │   │       │
+│   │   │       ├── repository/
+│   │   │       │
+│   │   │       ├── security/
+│   │   │       │
+│   │   │       ├── service/
+│   │   │       │
+│   │   │       └── util/
+│   │   │
 │   │   └── resources/
-│   │       ├── application.properties  # Configuration
-│   │   └── static/              # Frontend (HTML, CSS, JS)
-│   └── test/                  # JUnit tests
-├── pom.xml                    # Maven project configuration
+│   │       ├── application.properties
+│   │       └── static/
+│   │
+│   └── test/
+│
 ├── docs/
-│   ├── architecture.md         # Detailed architecture documentation
-│   ├── api.md                # API endpoint documentation
-│   ├── learning-guide.md     # Java concepts learning guide
-│   └── README.md             # This file
-├── LEARNING.md               # Stage-based learning roadmap
-└── target/                    # Compiled build output
+│   ├── architecture.md
+│   ├── api.md
+│   ├── learning-guide.md
+│   └── README.md
+│
+├── LEARNING.md
+├── pom.xml
+└── README.md
 ```
 
-## Prerequisites
+---
 
-- Java 21 or higher installed
-- Maven 3.9.6 or higher
-- (Optional) PostgreSQL for production deployment
-- (Optional) AI API key for actual AI functionality
+# 🚀 Getting Started
 
-## Installation
+## Requirements
 
-### 1. Clone the Repository
+Make sure you have:
+
+```text
+Java 21+
+Maven 3.9.6+
+PostgreSQL (optional for development)
+AI API Key
+```
+
+---
+
+## 1. Clone
+
 ```bash
 git clone <repository-url>
+
 cd java-ai-chatbot
 ```
 
-### 2. Install Dependencies
+---
+
+## 2. Install Dependencies
+
 ```bash
 mvn clean install
 ```
 
-### 3. Set Environment Variables
+---
+
+## 3. Configure Environment
+
 ```bash
 export AI_API_URL=http://localhost:8080
+export AI_API_KEY=your_api_key
 export ADMIN_PASSWORD=your_secure_password
 ```
 
-### 4. Run the Application
+> On Windows PowerShell, use `$env:VARIABLE="value"`.
+
+---
+
+## 4. Run
+
 ```bash
 mvn spring-boot:run
 ```
 
-Or run the packaged JAR:
+Or:
+
 ```bash
 java -jar target/java-ai-chatbot-1.0.0.jar
 ```
 
-The application will start on `http://localhost:8080`
+Then open:
 
-## Environment Variables
+```text
+http://localhost:8080
+```
 
-| Variable | Default | Description |
-|----------|---------|-------------|
+---
+
+# 🔑 Environment Variables
+
+| Variable | Default | Purpose |
+|---|---|---|
 | `AI_API_URL` | `http://localhost:8080` | AI API base URL |
-| `ADMIN_PASSWORD` | `admin123` | Admin user password |
-| `AI_API_KEY` | (required) | AI service API key |
+| `AI_API_KEY` | Required | AI provider authentication |
+| `ADMIN_PASSWORD` | `admin123` | Admin configuration |
 
-## API Endpoints
+### ⚠️ Security
 
-### Chat Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/chat` | Send message to AI |
-| `GET` | `/api/conversations` | List all conversations |
-| `GET` | `/api/conversations/{id}` | Get conversation by ID |
-| `GET` | `/api/conversations/{id}/messages` | Get messages for conversation |
+**Never commit your API key or passwords to GitHub.**
+
+Use environment variables or a local configuration file that is excluded from Git.
+
+---
+
+# 🌐 API
+
+## Chat
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `POST` | `/api/chat` | Send message |
+| `GET` | `/api/conversations` | List conversations |
+| `GET` | `/api/conversations/{id}` | Get conversation |
+| `GET` | `/api/conversations/{id}/messages` | Get messages |
 | `DELETE` | `/api/conversations/{id}` | Delete conversation |
 
-### Auth Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/auth/register` | Register new user |
-| `POST` | `/api/auth/login` | Login user |
+## Authentication
 
-### Status Codes
-- `200 OK` - Successful operation
-- `204 No Content` - Delete operation successful
-- `400 Bad Request` - Validation failed
-- `401 Unauthorized` - Not authenticated
-- `404 Not Found` - Resource doesn't exist
-- `503 Service Unavailable` - AI service down
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `POST` | `/api/auth/register` | Register |
+| `POST` | `/api/auth/login` | Login |
 
-## Usage
+---
 
-### Starting the Application
+# 💻 Example Request
+
 ```bash
-# Using Maven
-mvn spring-boot:run
-
-# Or using the JAR
-java -jar target/java-ai-chatbot-1.0.0.jar
-```
-
-### Sending Your First Message
-```bash
-# Using curl
 curl -X POST http://localhost:8080/api/chat \
   -H "Content-Type: application/json" \
-  -d "{\"message\": \"Explain Java inheritance\"}"
-
-# Using the frontend
-# 1. Open http://localhost:8080 in your browser
-# 2. Type a message in the input field
-# 3. Press Enter to send
-# 4. View the AI's response
+  -d "{\"message\":\"Explain Java inheritance\"}"
 ```
 
-## Testing
+Example flow:
 
-### Run Tests
+```text
+Request
+   ↓
+Controller
+   ↓
+Validation
+   ↓
+Chat Service
+   ↓
+AI Service
+   ↓
+AI Provider
+   ↓
+Response
+   ↓
+Database
+   ↓
+Frontend
+```
+
+---
+
+# 🧪 Testing
+
+Run the complete test suite:
+
 ```bash
 mvn test
 ```
 
-All tests should pass. Tests cover:
-- AI service DTO validation
-- Chat controller functionality
-- No real AI API key required (tests use mock setup)
+Tests cover areas such as:
 
-## Security
+```text
+✓ DTO Validation
 
-- **Never commit API keys** to the repository
-- API keys should be stored in environment variables
-- Passwords are never stored in plaintext (configured for hashing)
-- CORS is configured properly
-- Sensitive information is not exposed in error messages
+✓ Chat Controller
 
-## License
+✓ Service Logic
 
-This project is open source and available under the MIT license.
+✓ Mock AI Integration
 
-## Learn More
+✓ Error Handling
+```
 
-- [Java 21 Documentation](https://docs.oracle.com/en/java/javase/21/)
-- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-- [Maven Documentation](https://maven.apache.org/guides/index.html)
+---
+
+# 🗺️ Roadmap
+
+```text
+                    JAVA AI CHATBOT
+                           │
+          ┌────────────────┼────────────────┐
+          ▼                ▼                ▼
+
+       CURRENT          NEXT             FUTURE
+
+       ✓ Chat           □ JWT            □ Streaming
+       ✓ REST API       □ User Profile   □ WebSocket
+       ✓ Database       □ Roles          □ File Upload
+       ✓ History        □ Security       □ RAG
+       ✓ Frontend       □ AI Providers   □ AI Agents
+       ✓ Testing
+```
+
+---
+
+# 🎯 Learning Goals
+
+This project is also a practical way to strengthen Java development skills.
+
+```text
+Java
+  ↓
+OOP
+  ↓
+Spring Boot
+  ↓
+REST APIs
+  ↓
+JPA / Hibernate
+  ↓
+Database
+  ↓
+Security
+  ↓
+Testing
+  ↓
+AI Integration
+```
+
+> **The goal isn't only to build a chatbot.  
+> The goal is to understand how a production-style Java application is designed.**
+
+---
+
+# 📚 Documentation
+
+More detailed documentation is available in:
+
+```text
+docs/
+│
+├── architecture.md
+├── api.md
+├── learning-guide.md
+└── README.md
+```
+
+Learning roadmap:
+
+```text
+LEARNING.md
+```
+
+---
+
+# 🔮 Future Vision
+
+The long-term goal is to evolve this project into a more complete AI platform.
+
+```text
+              ┌─────────────────┐
+              │    JAVA AI      │
+              │     CORE        │
+              └────────┬────────┘
+                       │
+       ┌───────────────┼───────────────┐
+       ▼               ▼               ▼
+     Chat            RAG            Agents
+       │               │               │
+       ▼               ▼               ▼
+    Memory          Documents       Automation
+       │               │               │
+       └───────────────┼───────────────┘
+                       ▼
+                 AI WORKSPACE
+```
+
+---
+
+# 👨‍💻 Built By
+
+<div align="center">
+
+## Dipak Sonawane
+
+**Java • AI • Software Development**
+
+I'm using this project to apply my Java knowledge, experiment with AI integration, and learn how full-stack applications are designed and structured.
+
+<br>
+
+<a href="https://github.com/DSnext412-jpg">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github"/>
+</a>
+
+<a href="https://www.linkedin.com/">
+<img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin"/>
+</a>
+
+</div>
+
+---
+
+<div align="center">
+
+# 🤖 JAVA × AI
+
+### Build → Learn → Test → Improve
+
+<br>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&height=120&section=footer&color=gradient"/>
+
+**⭐ If you find this project interesting, consider starring the repository.**
+
+</div>
