@@ -1,1 +1,4 @@
+$env:MYSQL_PASSWORD="your_mysql_root_password"
+
+
 mvn spring-boot:run -DskipTests

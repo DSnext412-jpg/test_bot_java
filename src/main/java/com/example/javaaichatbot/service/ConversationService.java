@@ -43,17 +43,13 @@ public class ConversationService {
 
     @Transactional
     public void deleteConversation(Long conversationId, User user) {
-        // Verify conversation belongs to user first
         getConversationById(conversationId, user);
-        // Delete messages for this conversation
         messageRepository.deleteByConversationId(conversationId);
-        // Delete the conversation
         conversationRepository.deleteById(conversationId);
     }
 
     public List<Message> getMessagesByConversation(Long conversationId, User user) {
-        // Verify conversation belongs to user
-        getConversationById(conversationId, user); // Will throw if not found
+        getConversationById(conversationId, user);
         return messageRepository.findByConversationId(conversationId);
     }
 

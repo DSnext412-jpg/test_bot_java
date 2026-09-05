@@ -37,27 +37,22 @@ public class ChatController {
         String username = userDetails.getUsername();
         User user = (User) userDetails;
 
-        // Find existing conversation for this user, or create a new one
         List<Conversation> conversations = conversationService.getConversationsByUser(user);
         Conversation conversation = conversations.isEmpty()
                 ? conversationService.createConversation(user, "Recent")
                 : conversations.get(0);
 
-        // Save user message
         Message userMessage = conversationService.addMessage(
                 conversation.getId(), user, request.getMessage(), Message.Role.USER);
 
         try {
-            // Call AI API
             ChatResponse response = aiService.generateResponse(request);
 
-            // Save assistant message
             Message assistantMessage = conversationService.addMessage(
                     conversation.getId(), user, response.getResponse(), Message.Role.ASSISTANT);
 
             return ResponseEntity.ok(response);
         } catch (AIServiceException e) {
-            // Still save the user message even if AI fails
             return ResponseEntity.status(503)
                     .body(new ChatResponse("AI service temporarily unavailable. Your message has been saved."));
         }
