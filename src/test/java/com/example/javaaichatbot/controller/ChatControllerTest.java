@@ -2,11 +2,10 @@ package com.example.javaaichatbot.controller;
 
 import com.example.javaaichatbot.dto.ChatRequest;
 import com.example.javaaichatbot.dto.ChatResponse;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.ContextLoader;
-
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
