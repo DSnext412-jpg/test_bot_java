@@ -1,5 +1,4 @@
 package com.example.javaaichatbot.service;
-
 import com.example.javaaichatbot.model.User;
 import com.example.javaaichatbot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ public class AuthService {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
-
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
@@ -32,7 +30,6 @@ public class AuthService {
         user.setUpdatedAt(java.time.LocalDateTime.now());
         return userRepository.save(user);
     }
-
     public User login(String username, String password) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -40,7 +37,6 @@ public class AuthService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-
         return user;
     }
 }
