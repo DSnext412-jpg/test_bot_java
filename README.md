@@ -492,7 +492,7 @@ The long-term goal is to evolve this project into a more complete AI platform.
 
 **Java • AI • Software Development**
 
-I'm using this project to apply my Java knowledge, experiment with AI integration, and learn how full-stack applications are designed and structured.
+I'm using this project to apply my Java knowledge, experiment with AI integration, and learn how designed and structured
 
 <br>
 
