@@ -319,7 +319,6 @@
         showLoading(true);
         errorMessage.classList.remove('show');
 
-        // Add user message immediately
         addMessage('user', text);
         messageInput.value = '';
         messageInput.focus();
@@ -342,7 +341,6 @@
         } catch (error) {
             console.error('Error:', error);
             showError('Failed to get AI response. Please try again.');
-            // Remove the user message we just added if there's an error
             chatArea.removeChild(chatArea.lastChild);
         } finally {
             isSending = false;
@@ -350,18 +348,16 @@
         }
     }
 
-    // Enter to send, Shift + Enter for newline
     messageInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             sendBtn.click();
         }
     });
-
-    // Send button click
+ 
     sendBtn.addEventListener('click', sendMessage);
 
-    // Initial focus
+
     messageInput.focus();
 </script>
 
