@@ -3,23 +3,19 @@ package com.example.javaaichatbot.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
-
-@Entity
 @Table(name = "conversations")
 public class Conversation {
-
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -77,8 +73,6 @@ public class Conversation {
         Conversation that = (Conversation) o;
         return Objects.equals(id, that.id);
     }
-
-    @Override
     public int hashCode() {
         return Objects.hash(id);
     }
